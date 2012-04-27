@@ -26,6 +26,8 @@ public class NetworkMatcher {
     private final static String SKY_ROUTERS = "SKY[0-9]{5}";
     private final static String INFOSTRADA_ROUTERS = "InfostradaWiFi-[0-9a-zA-Z]{6}";
     private final static String ONO_ROUTERS = "[Pp]1[0-9]{6}0{4}[0-9]";
+    private final static String ALICE_ROUTERS = "[aA]lice-[0-9]{8}";
+    private final static String EIRCOM_ROUTERS = "eircom([0-7]{8}|[0-7]{4} [0-7]{4})";
     
     
     public NetworkMatcher(Context con) {
@@ -73,7 +75,7 @@ public class NetworkMatcher {
             return new WifiNetwork(ssid, ssidSubpart, mac, result.level,
                     result.capabilities, true, type);
         }
-        if ((ssid.matches("eircom[0-7]{8}|eircom[0-7]{4} [0-7]{4}"))) {
+        if ((ssid.matches(EIRCOM_ROUTERS))) {
             final String ssidSubpart;
             if (ssid.length() == 14)
                 ssidSubpart = ssid.substring(ssid.length() - 8);
@@ -126,7 +128,7 @@ public class NetworkMatcher {
                 return new WifiNetwork(ssid, ssidSubpart, mac, result.level,
                         result.capabilities, true, type);
         }
-        if (ssid.matches("[aA]lice-[0-9]{8}")) {
+        if (ssid.matches(ALICE_ROUTERS)) {
             final String ssidSubpart = ssid.substring(ssid.length() - 8);
             final List<AliceMagicInfo> magicInfos = new ArrayList<AliceMagicInfo>();
             for ( AliceMagicInfo info : supportedAlice )
