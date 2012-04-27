@@ -48,7 +48,7 @@ public class SkyV1Keygen extends KeygenThread{
 	public void run(){
 		if ( getRouter() == null)
 			return;
-		if ( getRouter().getMac().length() != 12 ) 
+		if ( getRouter().getMacClean().length() != 12 ) 
 		{
 			handler.sendMessage(Message.obtain(handler, ERROR_MSG , 
 					resources.getString(R.string.msg_nomac)));
@@ -62,7 +62,7 @@ public class SkyV1Keygen extends KeygenThread{
 			return;
 		}
 		md.reset();
-		md.update(getRouter().getMac().getBytes());
+		md.update(getRouter().getMacClean().getBytes());
 		byte [] hash = md.digest();
 		String key ="";
 		for ( int i = 1 ; i <= 15 ; i += 2 )

@@ -80,11 +80,11 @@ public class Preferences extends PreferenceActivity {
 	static byte[] cfvTable = new byte[18];
 	
 	public static final String PUB_DOWNLOAD = 
-		"http://android-thomson-key-solver.googlecode.com/files/RKDictionary.dic";
+		"http://android-thomson-key-listener.googlecode.com/files/RKDictionary.dic";
 	private static final String PUB_DIC_CFV =
-		"http://android-thomson-key-solver.googlecode.com/svn/trunk/RKDictionary.cfv";
+		"http://android-thomson-key-listener.googlecode.com/svn/trunk/RKDictionary.cfv";
 	private static final String PUB_VERSION =
-		"http://android-thomson-key-solver.googlecode.com/svn/trunk/RouterKeygenVersion.txt";
+		"http://android-thomson-key-listener.googlecode.com/svn/trunk/RouterKeygenVersion.txt";
 
 	private static final String folderSelectPref = "folderSelect";
 	private static final String VERSION = "2.9.1";
@@ -674,7 +674,7 @@ public class Preferences extends PreferenceActivity {
 				.setPositiveButton(R.string.bt_website, new OnClickListener() {
 					
 					public void onClick(DialogInterface dialog, int which) {
-						String url = "http://code.google.com/p/android-thomson-key-solver/downloads/list";
+						String url = "http://code.google.com/p/android-thomson-key-listener/downloads/list";
 						Intent i = new Intent(Intent.ACTION_VIEW);
 						i.setData(Uri.parse(url));
 						startActivity(i);

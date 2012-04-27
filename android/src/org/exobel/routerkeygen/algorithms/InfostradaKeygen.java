@@ -38,13 +38,13 @@ public class InfostradaKeygen extends KeygenThread {
 	public void run(){
 		if ( getRouter() == null)
 			return;
-		if ( getRouter().getMac().length() != 12 ) 
+		if ( getRouter().getMacClean().length() != 12 ) 
 		{
 			handler.sendMessage(Message.obtain(handler, ERROR_MSG , 
 					resources.getString(R.string.msg_errpirelli)));
 			return;
 		}
-		pwList.add("2"+getRouter().getMac().toUpperCase());
+		pwList.add("2"+getRouter().getMacClean().toUpperCase());
 		handler.sendEmptyMessage(RESULTS_READY);
 		return;
 	}

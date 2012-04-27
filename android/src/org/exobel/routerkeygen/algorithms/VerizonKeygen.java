@@ -57,9 +57,9 @@ public class VerizonKeygen extends KeygenThread {
 		ssid = Integer.toHexString(result).toUpperCase();
 		while ( ssid.length() < 6 )
 			ssid = "0" + ssid;
-	    if ( !getRouter().getMac().equals(""))
+	    if ( !getRouter().getMacClean().equals(""))
 	    {
-	    	pwList.add(getRouter().getMac().substring(3,5) + getRouter().getMac().substring(6,8) + 
+	    	pwList.add(getRouter().getMacClean().substring(3,5) + getRouter().getMacClean().substring(6,8) + 
 	    					Integer.toHexString(result).toUpperCase());
 	    }
 	    else	

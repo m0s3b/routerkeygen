@@ -18,34 +18,28 @@
  */
 package org.exobel.routerkeygen;
 
-import java.io.Serializable;
-
-public class AliceMagicInfo implements Serializable{
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1640975633984337261L;
-	String alice;
-	private int [] magic;
-	private String serial;
-	String mac;
+public class AliceMagicInfo {
+	private final String alice;
+	private final int [] magic;
+	private final String serial;
+	private final String mac;
 	public AliceMagicInfo(String alice,  int[] magic,
 			String serial, String mac) {
 		this.alice = alice;
-		this.setMagic(magic);
-		this.setSerial(serial);
+		this.magic = magic;
+		this.serial = serial;
 		this.mac = mac;
 	}
     public int [] getMagic() {
         return magic;
     }
-    public void setMagic(int [] magic) {
-        this.magic = magic;
-    }
     public String getSerial() {
         return serial;
     }
-    public void setSerial(String serial) {
-        this.serial = serial;
+    public String getAlice() {
+        return alice;
+    }
+    public String getMac() {
+        return mac;
     }
 }

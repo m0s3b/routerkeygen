@@ -95,7 +95,7 @@ public class HuaweiKeygen extends KeygenThread {
 	public void  run(){
 		if ( getRouter() == null)
 			return;
-		if ( getRouter().getMac().length() != 12 ) 
+		if ( getRouter().getMacClean().length() != 12 ) 
 		{
 			handler.sendMessage(Message.obtain(handler, ERROR_MSG , 
 					resources.getString(R.string.msg_errpirelli)));
@@ -104,7 +104,7 @@ public class HuaweiKeygen extends KeygenThread {
 		int [] mac = new int [12];
 		for ( int i = 0 ; i < 12 ; ++i)
 		{
-			mac[i] =  Integer.parseInt(getRouter().getMac().substring(i, i+1), 16);
+			mac[i] =  Integer.parseInt(getRouter().getMacClean().substring(i, i+1), 16);
 		}
 		int s1=(n1[mac[0]])^(a4[mac[1]])^(a6[mac[2]])^(a1[mac[3]])^(a11[mac[4]])^
 				(n20[mac[5]])^(a10[mac[6]])^(a4[mac[7]])^(a8[mac[8]])^(a2[mac[9]])^

@@ -36,7 +36,8 @@ public class EircomKeygen extends KeygenThread  {
 	}
 
 	public void run(){
-		String mac=  getRouter().getMacEnd();
+	    
+		String mac=  getRouter().getMacClean().substring(6);
 		try {
 			md = MessageDigest.getInstance("SHA1");
 		} catch (NoSuchAlgorithmException e1) {

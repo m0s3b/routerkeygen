@@ -18,36 +18,34 @@
  */
 package org.exobel.routerkeygen;
 
-import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
+class AliceHandle extends DefaultHandler{
+    private final List<AliceMagicInfo> supportedAlice = new ArrayList<AliceMagicInfo>();
 
-class AliceHandle extends DefaultHandler implements Serializable{
-	private static final long serialVersionUID = -1867841551140131246L;
-	String alice;
-	ArrayList<AliceMagicInfo> supportedAlice;
+	public List<AliceMagicInfo> getSupportedAlice() {
+        return this.supportedAlice;
+    }
 
-	public AliceHandle(String alice){
-		super();
-		this.alice = alice;
-		supportedAlice = new ArrayList<AliceMagicInfo>();
-	} 
-	public void startElement(String uri, String localName,
+    public void startElement(String uri, String localName,
 	        String qName, Attributes attributes){
 		int [] magic = new int[2];
 		String serial;
 		String mac;
-		if ( alice.equalsIgnoreCase(localName) )
+		if ( localName == null )
+		    return;
+		if ( localName.toLowerCase().startsWith("alice-") )
 		{
 			serial = attributes.getValue("sn");
 			mac = attributes.getValue("mac");
 			magic[0] = Integer.parseInt(attributes.getValue("q"));
 			magic[1] = Integer.parseInt(attributes.getValue("k"));
-			supportedAlice.add(new AliceMagicInfo(alice, magic, serial, mac));
+			supportedAlice.add(new AliceMagicInfo(localName, magic, serial, mac));
 		}
 	}
 	

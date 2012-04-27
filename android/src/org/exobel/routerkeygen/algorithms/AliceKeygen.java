@@ -90,12 +90,12 @@ public class AliceKeygen extends KeygenThread {
 			String key = "";
 			byte [] hash;		
 			
-			if (  getRouter().getMac().length() == 12 ) {
+			if (  getRouter().getMacClean().length() == 12 ) {
 					
 				
 				for (int i = 0; i < 12; i += 2)
-					mac[i / 2] = (byte) ((Character.digit(getRouter().getMac().charAt(i), 16) << 4)
-							+ Character.digit(getRouter().getMac().charAt(i + 1), 16));
+					mac[i / 2] = (byte) ((Character.digit(getRouter().getMacClean().charAt(i), 16) << 4)
+							+ Character.digit(getRouter().getMacClean().charAt(i + 1), 16));
 	
 				md.reset();
 				md.update(specialSeq);
@@ -115,7 +115,7 @@ public class AliceKeygen extends KeygenThread {
 			}
 			
 			/*For post AGPF 4.5.0sx*/
-			String macEth = getRouter().getMac().substring(0,6);
+			String macEth = getRouter().getMacClean().substring(0,6);
 			int extraNumber = 0;
 			while ( extraNumber <= 9 )
 			{
@@ -128,7 +128,7 @@ public class AliceKeygen extends KeygenThread {
 				}
 				extraNumber++;
 			}
-			if ( macEth.equals(getRouter().getMac().substring(0,6)) )
+			if ( macEth.equals(getRouter().getMacClean().substring(0,6)) )
 			{
 				handler.sendEmptyMessage(RESULTS_READY);
 				return;

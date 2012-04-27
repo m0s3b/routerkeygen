@@ -43,7 +43,7 @@ public class Wlan2Keygen extends KeygenThread {
 
 		if (getRouter() == null)
 			return;
-		String mac = getRouter().getMac();
+		String mac = getRouter().getMacClean();
 
 		if (mac.length() != 12) {
 			handler.sendMessage(Message.obtain(handler, ERROR_MSG , 
@@ -80,7 +80,7 @@ public class Wlan2Keygen extends KeygenThread {
 		key[25] = mac.charAt(5);
 
 		int max = 9;
-		String begin = getRouter().getSsidSubpart().substring(0,1);
+		String begin = getRouter().getSSIDsubpart().substring(0,1);
 		int primer_n = Integer.parseInt(begin, 16);  
 		if (primer_n > max) {
 		   String cadena = String.valueOf(key, 0, 2);  	

@@ -34,14 +34,14 @@ public class Wlan6Keygen extends KeygenThread {
 	{
 		if ( getRouter() == null )
 			return;
-		if ( getRouter().getMac().equals("") ) 
+		if ( getRouter().getMacClean().equals("") ) 
 		{	
 			handler.sendMessage(Message.obtain(handler, ERROR_MSG , 
 					resources.getString(R.string.msg_nomac)));
 			return;
 		}
 		String ssidStr = getRouter().getSSIDsubpart();
-		String macStr = getRouter().getMac();
+		String macStr = getRouter().getMacClean();
 		char [] ssidSubPart = {'1', '2','3', '4', '5','6' };/*These values are not revelant.*/
 		char [] bssidLastByte = { '6', '6' };
 		ssidSubPart[0] = ssidStr.charAt(0);

@@ -18,60 +18,56 @@
  */
 package org.exobel.routerkeygen;
 
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
-
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.net.wifi.ScanResult;
+import android.net.wifi.WifiManager;
 import android.widget.Toast;
 
 class WiFiScanReceiver extends BroadcastReceiver {
-	  RouterKeygen solver;
+    final ScanListener listener;
+    final NetworkMatcher matcher;
+    final WifiManager wifiManager;
 
-	  public WiFiScanReceiver( RouterKeygen wifiDemo) {
-	    super();
-	    this.solver = wifiDemo;
-	  }
+    public WiFiScanReceiver(ScanListener listener, WifiManager wifiManager,
+            NetworkMatcher matcher) {
+        this.listener = listener;
+        this.matcher = matcher;
+        this.wifiManager = wifiManager;
+    }
 
-	  public void onReceive(Context c, Intent intent) {
-		  
-		if ( solver == null )
-			return;
-		if ( solver.getWifi() == null )
-			return;
-	    List<ScanResult> results = solver.getWifi().getScanResults();
-	    ArrayList<WifiNetwork> list = new ArrayList<WifiNetwork>();
-	    Set<WifiNetwork> set = new TreeSet<WifiNetwork>();
-	    if ( results == null )/*He have had reports of this returning null instead of empty*/
-	    	return;
-	    for (int i = 0; i < results.size() - 1; ++i)
-	    	for (int j = i+1; j < results.size(); ++j)
-		    	if(results.get(i).SSID.equals(results.get(j).SSID))
-		    		results.remove(j--);
-	    
-	    for (ScanResult result : results) {
-	    	  set.add(new WifiNetwork(result.SSID, result.BSSID, result.level , result.capabilities , solver));
-	    }
-	    Iterator<WifiNetwork> it = set.iterator();
-	    while( it.hasNext())
-	    	list.add(it.next());
-	    solver.setVulnerable(list);
-	    if (  list.isEmpty() )
-	    {
-			Toast.makeText( solver , solver.getResources().getString(R.string.msg_nowifidetected) ,
-					Toast.LENGTH_SHORT).show();
-	    }
-	    solver.getScanResuls().setAdapter(new WifiListAdapter(list , solver)); 
-	    try{
-		solver.unregisterReceiver(this);   
-	    }catch(Exception e ){}
-	    
-	 }
+    public void onReceive(Context context, Intent intent) {
+        List<ScanResult> results = wifiManager.getScanResults();
+        if (results == null)/*
+                             * He have had reports of this returning null
+                             * instead of empty
+                             */
+            return;
+        final Set<WifiNetwork> set = new TreeSet<WifiNetwork>();
+        // Removing repeated results
+        for (int i = 0; i < results.size() - 1; ++i)
+            for (int j = i + 1; j < results.size(); ++j)
+                if (results.get(i).SSID.equals(results.get(j).SSID))
+                    results.remove(j--);
 
+        for (ScanResult result : results) {
+            set.add(matcher.matchNetwork(result));
+        }
+
+        if (set.isEmpty()) {
+            Toast.makeText(context, R.string.msg_nowifidetected,
+                    Toast.LENGTH_SHORT).show();
+        }
+        listener.setScannedNetworks(set.toArray(new WifiNetwork[0]));
+        try {
+            context.unregisterReceiver(this);
+        } catch (Exception e) {
+        }
+
+    }
 }

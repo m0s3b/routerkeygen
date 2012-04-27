@@ -195,13 +195,13 @@ public class TelseyKeygen extends KeygenThread {
 	
 	public void run(){
 		JenkinsHash hash = new JenkinsHash();
-		if ( getRouter().getMac().equals("") ) 
+		if ( getRouter().getMacClean().equals("") ) 
 		{
 			handler.sendMessage(Message.obtain(handler, ERROR_MSG , 
 					resources.getString(R.string.msg_nomac)));
 			return;
 		}
-		long [] key = scrambler(getRouter().getMac());
+		long [] key = scrambler(getRouter().getMacClean());
 		long seed = 0;
 
 		for (int x = 0; x < 64; x++) {	

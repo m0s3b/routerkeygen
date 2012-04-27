@@ -35,14 +35,14 @@ public class DlinkKeygen extends KeygenThread {
 				 			'p', 'd', 'S', 'Y', 'w', 
 				 			'8', '6', '2', '1', '5'};
 		 
-		if ( getRouter().getMac().equals("") ) 
+		if ( getRouter().getMacClean().equals("") ) 
 		{
 			handler.sendMessage(Message.obtain(handler, ERROR_MSG , 
 					resources.getString(R.string.msg_nomac)));
 			return;
 		}
 		char[] key = new char[20];
-		String mac = getRouter().getMac();
+		String mac = getRouter().getMacClean();
 		key[0]=mac.charAt(11);
 		key[1]=mac.charAt(0);
 		 

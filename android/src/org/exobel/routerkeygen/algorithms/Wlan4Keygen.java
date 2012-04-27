@@ -46,25 +46,25 @@ public class Wlan4Keygen extends KeygenThread {
 					resources.getString(R.string.msg_nomd5)));
 			return;
 		}
-		if ( getRouter().getMac().length() != 12 ) 
+		if ( getRouter().getMacClean().length() != 12 ) 
 		{
 			handler.sendMessage(Message.obtain(handler, ERROR_MSG , 
 					resources.getString(R.string.msg_errpirelli)));
 			return;
 		}
-		String macMod = getRouter().getMac().substring(0,8) + getRouter().getSSIDsubpart();
+		String macMod = getRouter().getMacClean().substring(0,8) + getRouter().getSSIDsubpart();
 		md.reset();
 		try {
-			if ( !getRouter().getMac().toUpperCase().startsWith("001FA4") )
+			if ( !getRouter().getMacClean().toUpperCase().startsWith("001FA4") )
 				md.update(magic.getBytes("ASCII"));
-			if ( !getRouter().getMac().toUpperCase().startsWith("001FA4") )
+			if ( !getRouter().getMacClean().toUpperCase().startsWith("001FA4") )
 				md.update(macMod.toUpperCase().getBytes("ASCII"));
 			else
 				md.update(macMod.toLowerCase().getBytes("ASCII"));
-			if ( !getRouter().getMac().toUpperCase().startsWith("001FA4") )
-				md.update(getRouter().getMac().toUpperCase().getBytes("ASCII"));
+			if ( !getRouter().getMacClean().toUpperCase().startsWith("001FA4") )
+				md.update(getRouter().getMacClean().toUpperCase().getBytes("ASCII"));
 			byte [] hash = md.digest();
-			if  ( !getRouter().getMac().toUpperCase().startsWith("001FA4") )
+			if  ( !getRouter().getMacClean().toUpperCase().startsWith("001FA4") )
 				pwList.add(StringUtils.getHexString(hash).substring(0,20));
 			else
 				pwList.add(StringUtils.getHexString(hash).substring(0,20).toUpperCase());
